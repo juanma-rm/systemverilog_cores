@@ -1,10 +1,10 @@
 DUT = priority_encoder
-SRC_OTHER = ../../rtl/$(DUT)_package.sv
+SRC = ../../rtl/$(DUT)_package.sv ../../rtl/$(DUT).sv
 
 all: wave
 
 build: 
-	iverilog -g2012 -o my_sim.vvp $(SRC_OTHER) ../../rtl/$(DUT).sv $(DUT)_tb.sv
+	iverilog -g2012 -o my_sim.vvp $(SRC) $(DUT)_tb.sv
 
 run: build
 	vvp my_sim.vvp
