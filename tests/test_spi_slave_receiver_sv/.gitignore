@@ -1,0 +1,8 @@
+*.vvp
+__pycache__/
+sim_build/
+results.xml
+iverilog_dump.v
+*.vcd
+*.fst
+obj_dir/
