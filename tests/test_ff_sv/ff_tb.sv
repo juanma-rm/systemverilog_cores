@@ -7,8 +7,6 @@
 *********************************************************************************/
 
 `resetall
-timeunit 1ns;
-timeprecision 1ps;
 `default_nettype none
 
 `define VCD_PATH "ff_tb.vcd"
@@ -20,6 +18,20 @@ timeprecision 1ps;
 
 module ff_tb;
 
+timeunit 1ns;
+timeprecision 1ps;
+
+/********************************************************************************* 
+ * Auxiliar functions
+*********************************************************************************/
+
+task verify_assert(string msg, int expected, int actual, output int error_cnt);
+    if (expected !== actual) begin
+        $error("%s: Expected %0d, got %0d", msg, expected, actual);
+        error_cnt++;
+    end
+endtask
+
 /********************************************************************************* 
  * Module logic
 *********************************************************************************/
@@ -30,6 +42,7 @@ module ff_tb;
     // TB signals
     logic clk, rstn;
     logic [DATA_WIDTH-1:0] data_i, data_o;
+    int num_errors_found;
 
     // DUT instance
     ff # (
@@ -61,6 +74,7 @@ module ff_tb;
     initial begin
 
         $dumpfile(`VCD_PATH); $dumpvars;
+        num_errors_found = 0;
 
         // Wait for reset operation to finish
         repeat (7) @(posedge clk);
@@ -72,15 +86,20 @@ module ff_tb;
         // nothing to assert at this cycle
 
         @(negedge clk);
-        assert (data_o == 32'hAAAA0000) else $error("data_o mismatch: expected 0xAAAA0000, got 0x%08x", data_o);
+        verify_assert("data_o for 32'hAAAA0000", 32'hAAAA0000, data_o, num_errors_found);
         data_i = 32'hAAAA0001;
         
         @(negedge clk);
-        assert (data_o == 32'hAAAA0001) else $error("data_o mismatch: expected 0xAAAA0001, got 0x%08x", data_o);
+        verify_assert("data_o for 32'hAAAA0001", 32'hAAAA0001, data_o, num_errors_found);
         data_i = 32'hAAAA0002;
 
         @(negedge clk);
-        assert (data_o == 32'hAAAA0002) else $error("data_o mismatch: expected 0xAAAA0002, got 0x%08x", data_o);
+        verify_assert("data_o for 32'hAAAA0002", 32'hAAAA0002, data_o, num_errors_found);
+
+        if (num_errors_found == 0)
+            $display("\nTest finished successfully. All tests passed.\n");
+        else
+            $display("\nTest finished with errors. %0d errors found.\n", num_errors_found);
 
         $finish;
     end

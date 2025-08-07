@@ -7,8 +7,6 @@
 *********************************************************************************/
 
 `resetall
-timeunit 1ns;
-timeprecision 1ps;
 `default_nettype none
 
 `define VCD_PATH "counter_tb.vcd"
@@ -19,6 +17,9 @@ timeprecision 1ps;
 *********************************************************************************/
 
 module counter_tb;
+
+timeunit 1ns;
+timeprecision 1ps;
 
 /********************************************************************************* 
  * Module logic

@@ -9,12 +9,10 @@
 *********************************************************************************/
 
 /********************************************************************************* 
- * Compiler directives
+ * Compiler directives and macros
 *********************************************************************************/
 
 `resetall
-timeunit 1ns;
-timeprecision 1ps;
 `default_nettype none
 
 /********************************************************************************* 
@@ -33,6 +31,9 @@ module counter #(
     output logic unsigned [WIDTH-1:0] count_o,
     output logic count_is_max_min_o // 1 if count is at max or min value
 );
+
+timeunit 1ns;
+timeprecision 1ps;
 
 /********************************************************************************* 
  * Module logic
