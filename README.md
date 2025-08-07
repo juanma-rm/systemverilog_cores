@@ -23,8 +23,4 @@ Notes:
 
 ## Running Tests
 
-To run a test for a specific core, navigate to `tests/test_<core>` and use the following commands:
-
-- `make` — Runs the simulation and generates results
-- `make build` — Compiles the testbench and core
-- `make wave` — Opens the waveform viewer (GTKWave) for simulation visualization
+To run a test for a specific core, navigate to `tests/test_<core>` and follow the instructions in the README.md provided there.
