@@ -25,9 +25,9 @@ module priority_encoder #(
     parameter CORE_VERSION = `V2_GENERIC,
     parameter DATA_WIDTH = 8
 ) (
-    input  logic [DATA_WIDTH-1:0] data_i,
-    output logic [$clog2(DATA_WIDTH)-1:0] data_o,
-    output logic valid_o
+    input  wire logic [DATA_WIDTH-1:0] data_i,
+    output var  logic [$clog2(DATA_WIDTH)-1:0] data_o,
+    output var  logic valid_o
 );
 
 timeunit 1ns;
